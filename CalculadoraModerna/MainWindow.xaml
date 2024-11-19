@@ -1,0 +1,194 @@
+﻿<Window x:Class="CalculadoraModerna.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
+        Title="Calculadora"
+        Height="550"
+        Width="330"
+        WindowStartupLocation="CenterScreen"
+        PreviewKeyDown="Window_PreviewKeyDown"
+        Icon="/calculator_icon-icons.com_72046.ico"
+        WindowStyle="ThreeDBorderWindow"
+        Background="#0C0C0C"
+        
+        
+        >
+    <Grid Margin="10">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <Label x:Name="space"
+               FontSize="15"
+               Foreground="LightGray"
+               HorizontalAlignment="Right"
+               VerticalAlignment="Bottom"
+               Height="35"
+               FontFamily="Segoe UI"
+               Margin="0,0,0,20" />
+        <!-- Preview Label -->
+        <Label x:Name="lblPreview"
+               FontSize="15"
+               Foreground="LightGray"
+               HorizontalAlignment="Right"
+               VerticalAlignment="Bottom"
+               Height="35"
+               FontFamily="Segoe UI"
+               Margin="0,0,0,5" />
+        <!-- Display -->
+        <Border Background="#323232"
+                CornerRadius="6"
+                Padding="0"
+                Grid.Row="1"
+                Margin="0,0,0,10"
+                >
+            <TextBox x:Name="txtDisplay"
+                     FontSize="46"
+                     Background="Transparent"
+                     Foreground="White"
+                     BorderThickness="0"
+                     HorizontalAlignment="Stretch"
+                     VerticalAlignment="Center"
+                     TextAlignment="Right"
+                     IsReadOnly="True"
+                     Padding="10"
+                     Height="80"
+                     FontFamily="Segoe UI"
+                     FontWeight="SemiBold" />
+        </Border>
+        <!-- Botones -->
+        <Grid Grid.Row="2">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            <!-- Fila de botones -->
+            <Button Content="C"
+                    Focusable="False"
+                    Grid.Row="0"
+                    Grid.Column="0"
+                    Click="btnLimpiar_Click"
+                    Style="{StaticResource BotonEstilo}" />
+            <Button Content="±"
+                    Focusable="False"
+                    Grid.Row="0"
+                    Grid.Column="1"
+                    Click="btnCambioSigno_Click"
+                    Style="{StaticResource BotonEstilo}" />
+            <Button Content="%"
+                    Focusable="False"
+                    Grid.Row="0"
+                    Grid.Column="2"
+                    Click="btnPorcentaje_Click"
+                    Style="{StaticResource BotonEstilo}" />
+            <Button Content="÷"
+                    Focusable="False"
+                    Grid.Row="0"
+                    Grid.Column="3"
+                    Click="btnOperador_Click"
+                    Style="{StaticResource BotonEstilo}" />
+            <Button Content="7"
+                    Focusable="False"
+                    Grid.Row="1"
+                    Grid.Column="0"
+                    Click="btnNumero_Click"
+                    Style="{StaticResource BotonEstilo}" />
+            <Button Content="8"
+                    Focusable="False"
+                    Grid.Row="1"
+                    Grid.Column="1"
+                    Click="btnNumero_Click"
+                    Style="{StaticResource BotonEstilo}" />
+            <Button Content="9"
+                    Focusable="False"
+                    Grid.Row="1"
+                    Grid.Column="2"
+                    Click="btnNumero_Click"
+                    Style="{StaticResource BotonEstilo}" />
+            <Button Content="×"
+                    Focusable="False"
+                    Grid.Row="1"
+                    Grid.Column="3"
+                    Click="btnOperador_Click"
+                    Style="{StaticResource BotonEstilo}" />
+            <Button Content="4"
+                    Focusable="False"
+                    Grid.Row="2"
+                    Grid.Column="0"
+                    Click="btnNumero_Click"
+                    Style="{StaticResource BotonEstilo}" />
+            <Button Content="5"
+                    Focusable="False"
+                    Grid.Row="2"
+                    Grid.Column="1"
+                    Click="btnNumero_Click"
+                    Style="{StaticResource BotonEstilo}" />
+            <Button Content="6"
+                    Focusable="False"
+                    Grid.Row="2"
+                    Grid.Column="2"
+                    Click="btnNumero_Click"
+                    Style="{StaticResource BotonEstilo}" />
+            <Button Content="-"
+                    Focusable="False"
+                    Grid.Row="2"
+                    Grid.Column="3"
+                    Click="btnOperador_Click"
+                    Style="{StaticResource BotonEstilo}" />
+            <Button Content="1"
+                    Focusable="False"
+                    Grid.Row="3"
+                    Grid.Column="0"
+                    Click="btnNumero_Click"
+                    Style="{StaticResource BotonEstilo}" />
+            <Button Content="2"
+                    Focusable="False"
+                    Grid.Row="3"
+                    Grid.Column="1"
+                    Click="btnNumero_Click"
+                    Style="{StaticResource BotonEstilo}" />
+            <Button Content="3"
+                    Focusable="False"
+                    Grid.Row="3"
+                    Grid.Column="2"
+                    Click="btnNumero_Click"
+                    Style="{StaticResource BotonEstilo}" />
+            <Button Content="+"
+                    Focusable="False"
+                    Grid.Row="3"
+                    Grid.Column="3"
+                    Click="btnOperador_Click"
+                    Style="{StaticResource BotonEstilo}" />
+            <Button Content="0"
+                    Focusable="False"
+                    Grid.Row="4"
+                    Grid.Column="0"
+                    Grid.ColumnSpan="2"
+                    Click="btnNumero_Click"
+                    Style="{StaticResource BotonEstilo}" />
+            <Button Content="."
+                    Focusable="False"
+                    Grid.Row="4"
+                    Grid.Column="2"
+                    Click="btnNumero_Click"
+                    Style="{StaticResource BotonEstilo}" />
+            <Button Content="="
+                    Grid.Row="4"
+                    Grid.Column="3"
+                    Click="btnIgual_Click"
+                    Foreground="Black"
+                    Background="#81b3d6"
+                    Style="{StaticResource BotonEstilo}" />
+        </Grid>
+    </Grid>
+</Window>
