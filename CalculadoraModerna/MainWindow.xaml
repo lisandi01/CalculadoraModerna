@@ -10,15 +10,42 @@
         Icon="/calculator_icon-icons.com_72046.ico"
         WindowStyle="ThreeDBorderWindow"
         Background="#0C0C0C"
+        SizeToContent="Manual" 
+        MinHeight="550"
+        MinWidth="330">
         
         
-        >
     <Grid Margin="10">
+        
+        
+        
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
+            <!-- Preview y espacio -->
             <RowDefinition Height="Auto" />
+            <!-- Display -->
             <RowDefinition Height="*" />
+            <!-- Botones -->
+            <RowDefinition Height="Auto" />
+            <!-- Botón Historial -->
+            <RowDefinition Height="Auto" />
+            <!-- Historial -->
         </Grid.RowDefinitions>
+        <!-- Botón para mostrar/ocultar el historial -->
+        <Button x:Name="btnHistorial"
+                Content="📜"
+                HorizontalAlignment="Left"
+                VerticalAlignment="Bottom"
+                Height="40"
+                Width="42"
+                Background="#323232"
+                Foreground="White"
+                BorderBrush="Gray"
+                BorderThickness="1"
+                Margin="0,7,0,10"
+                Click="btnHistorial_Click"
+                FontSize="20"
+                Style="{StaticResource BotonEstilo}" />
         <Label x:Name="space"
                FontSize="15"
                Foreground="LightGray"
@@ -190,5 +217,56 @@
                     Background="#81b3d6"
                     Style="{StaticResource BotonEstilo}" />
         </Grid>
+        <ScrollViewer x:Name="pnlHistorial"
+                      Grid.Row="4"
+                      Visibility="Collapsed"
+                      Background="#2C2C2C"
+                      Margin="0,10,0,0"
+                      MaxHeight="200"
+                      VerticalScrollBarVisibility="Auto"
+                      Style="{StaticResource ScrollViewerEstilo}">
+            <StackPanel>
+                <!-- Botón Limpiar Historial -->
+                <Button Content="🗑️ Limpiar Historial"
+                        Background="#444444"
+                        Foreground="White"
+                        BorderBrush="Transparent"
+                        BorderThickness="1"
+                        Click="btnLimpiarHistorial_Click"
+                        Margin="5"
+                        FontSize="16"
+                        FontWeight="SemiBold"
+                        Padding="10,5"
+                        HorizontalAlignment="Stretch"
+                        VerticalAlignment="Center"
+                        Style="{StaticResource BotonEstilo}">
+                    
+                </Button>
+                <!-- Lista del historial -->
+                <ListBox x:Name="lstHistorial"
+                         Background="#2C2C2C"
+                         Foreground="White"
+                         BorderBrush="#444444"
+                         BorderThickness="1"
+                         FontFamily="Segoe UI"
+                         FontSize="14"
+                         Margin="5"
+                         Height="120"
+                         SelectionChanged="lstHistorial_SelectionChanged"
+                         Padding="5"
+                         Style="{StaticResource ListBoxEstilo}">
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <StackPanel Orientation="Horizontal"
+                                        Margin="5">
+                                <TextBlock Text="{Binding}"
+                                           Foreground="White"
+                                           FontSize="14" />
+                            </StackPanel>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </ListBox>
+            </StackPanel>
+        </ScrollViewer>
     </Grid>
 </Window>

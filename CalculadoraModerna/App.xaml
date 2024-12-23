@@ -3,6 +3,9 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              StartupUri="MainWindow.xaml">
     <Application.Resources>
+        
+        
+        
         <!-- Estilo Moderno para Botones -->
         <Style x:Key="BotonEstilo"
                TargetType="Button">
@@ -77,5 +80,33 @@
         <!-- Fondo de la Ventana -->
         <SolidColorBrush x:Key="WindowBackground"
                          Color="#0C0C0C" />
+        <Style x:Key="ListBoxEstilo"
+               TargetType="ListBox">
+            <Setter Property="Background"
+                    Value="#2C2C2C" />
+            <Setter Property="BorderBrush"
+                    Value="#444444" />
+            <Setter Property="BorderThickness"
+                    Value="1" />
+            <Setter Property="FontSize"
+                    Value="14" />
+            <Setter Property="Foreground"
+                    Value="White" />
+            <Setter Property="Padding"
+                    Value="5" />
+            <Setter Property="Margin"
+                    Value="5" />
+        </Style>
+        <Style x:Key="ScrollViewerEstilo"
+               TargetType="ScrollViewer">
+            <Setter Property="Padding"
+                    Value="10" />
+            <Setter Property="VerticalScrollBarVisibility"
+                    Value="Auto" />
+            <Setter Property="HorizontalScrollBarVisibility"
+                    Value="Auto" />
+        </Style>
     </Application.Resources>
+    
+    
 </Application>

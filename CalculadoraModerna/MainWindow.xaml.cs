@@ -1,5 +1,8 @@
 ﻿using Microsoft.Win32;
 using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Configuration;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Web.Management;
@@ -17,8 +20,15 @@ namespace CalculadoraModerna
         private string ultimoOperador = "";
         private double resultado = 0;
         private double ultimoNumero = 0;
-
         private bool nuevaOperacion = false;
+
+        // Lista para guardar el historial
+        // Usar ObservableCollection para la lista de historial
+        private const string HistorialKey = "Historial"; // Clave en el archivo App.config
+
+        private List<string> historial = new List<string>();
+
+
 
         [DllImport("dwmapi.dll", EntryPoint = "DwmSetWindowAttribute")]
         private static extern int DwmSetWindowAttribute(IntPtr hwnd, int attr, ref int attrValue, int attrSize);
@@ -30,10 +40,29 @@ namespace CalculadoraModerna
             InitializeComponent();
             // Suscribirse al evento Loaded para asegurar que el tema oscuro se aplique al cargar
             Loaded += MainWindow_Loaded;
-
+            CargarHistorial();
             // Suscribirse a cambios del tema del sistema
             SystemEvents.UserPreferenceChanged += SystemEvents_UserPreferenceChanged;
 
+        }
+        // Método para guardar el historial en el archivo de configuración
+        private void GuardarHistorial()
+        {
+            // Convertir el historial a una cadena (separada por comas)
+            string historialStr = string.Join(",", historial);
+            // Guardar la cadena en el archivo de configuración
+            ConfigurationManager.AppSettings[HistorialKey] = historialStr;
+        }
+        // Método para cargar el historial desde el archivo de configuración
+        private void CargarHistorial()
+        {
+            string historialStr = ConfigurationManager.AppSettings[HistorialKey];
+            if (!string.IsNullOrEmpty(historialStr))
+            {
+                // Convertir la cadena a una lista de historial
+                historial = historialStr.Split(',').ToList();
+                lstHistorial.ItemsSource = historial; // Mostrar en la interfaz
+            }
         }
         private void MainWindow_Loaded(object sender, RoutedEventArgs e)
         {
@@ -282,9 +311,60 @@ namespace CalculadoraModerna
 
             operador = "";
             nuevaOperacion = true; // Permitir nueva operación
+
+            // Agregar la operación y resultado al historial
+            AddToHistory(lblPreview.Content.ToString(), txtDisplay.Text);
         }
 
+        private void AddToHistory(string operacion, string resultado)
+        {
+            string historialItem = $"{operacion} = {resultado}";
+            historial.Insert(0, historialItem); // Insertar al inicio de la lista para mostrar las operaciones más recientes arriba
+            lstHistorial.ItemsSource = null; // Resetear la fuente de datos
+            lstHistorial.ItemsSource = historial; // Vincular la lista actualizada al ListBox
+            GuardarHistorial();
+        }
 
+        private void btnHistorial_Click(object sender, RoutedEventArgs e)
+        {
+            // Toggle visibility del historial
+            if (pnlHistorial.Visibility == Visibility.Collapsed)
+            {
+                // Mostrar historial
+                pnlHistorial.Visibility = Visibility.Visible;
+
+                // Ajustar la altura de la ventana para mostrar el historial
+                this.Height = 742; // Aquí puedes ajustar el valor según tus necesidades
+            }
+            else
+            {
+                // Ocultar historial
+                pnlHistorial.Visibility = Visibility.Collapsed;
+
+                // Ajustar la altura de la ventana de vuelta
+                this.Height = 550; // Altura original
+            }
+        }
+
+        private void lstHistorial_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (lstHistorial.SelectedItem != null)
+            {
+                string operacion = lstHistorial.SelectedItem.ToString();
+                string[] partes = operacion.Split('=');
+                lblPreview.Content = partes[0].Trim(); // Mostrar la operación
+                txtDisplay.Text = partes.Last();
+                // Mostrar el resultado
+            }
+        }
+
+        private void btnLimpiarHistorial_Click(object sender, RoutedEventArgs e)
+        {
+            historial.Clear();
+            lstHistorial.ItemsSource = null;
+            ConfigurationManager.AppSettings[HistorialKey] = ""; // Limpiar el historial en la configuración
+
+        }
 
         private void btnLimpiar_Click(object sender, RoutedEventArgs e)
         {
